@@ -152,6 +152,12 @@ public class SpectrumGenerator {
         });
     }
 
+    /**
+     * 此方法使用每张谱图中的最高峰作为基准来校正其他峰信号
+     * @param spectrumDOS
+     * @param decoySpectrumDOS
+     * @param methodDO
+     */
     private void ionEntropyBased2(List<SpectrumDO> spectrumDOS, List<SpectrumDO> decoySpectrumDOS, MethodDO methodDO) {
         spectrumDOS.parallelStream().forEach(spectrumDO -> {
             Double mzTolerance = methodDO.getPpmForMzTolerance() ? methodDO.getPpm() * Constants.PPM * spectrumDO.getPrecursorMz() : methodDO.getMzTolerance();
