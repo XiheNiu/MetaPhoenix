@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.MappingJsonFactory;
 import lombok.extern.slf4j.Slf4j;
 import net.csibio.aird.enums.MsLevel;
 import net.csibio.metaphoenix.client.constants.enums.IonMode;
-import net.csibio.metaphoenix.client.constants.enums.LibraryType;
 import net.csibio.metaphoenix.client.domain.bean.spectrum.AnnotationHistory;
 import net.csibio.metaphoenix.client.domain.db.LibraryDO;
 import net.csibio.metaphoenix.client.domain.db.SpectrumDO;
@@ -68,7 +67,6 @@ public class GnpsParser {
             for (String libraryName : libraryNames) {
                 LibraryDO libraryDO = new LibraryDO();
                 libraryDO.setName(libraryName);
-                libraryDO.setType(LibraryType.Metabolomics.getName());
                 libraryDOS.add(libraryDO);
             }
 

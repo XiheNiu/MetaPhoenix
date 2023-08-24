@@ -2,7 +2,6 @@ package net.csibio.metaphoenix.client.domain.db;
 
 import lombok.Data;
 import net.csibio.aird.constant.SymbolConst;
-import net.csibio.metaphoenix.client.constants.enums.LibraryType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,12 +26,6 @@ public class LibraryDO implements Serializable {
      */
     @Indexed(unique = true)
     String name;
-
-    /**
-     * @see LibraryType
-     */
-    @Indexed
-    String type;
 
     /**
      * 靶标建库来自的基质,可以是standard,plasma,urine等,也可以是多种基质的组合 @see Matrix

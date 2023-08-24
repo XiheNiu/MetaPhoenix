@@ -1,7 +1,7 @@
 package net.csibio.metaphoenix.client.algorithm.score;
 
 import net.csibio.aird.bean.common.Spectrum;
-import net.csibio.metaphoenix.client.constants.NumericalConst;
+import net.csibio.metaphoenix.client.constants.Constants;
 import org.springframework.stereotype.Component;
 
 @Component("isotopeFinder")
@@ -14,7 +14,7 @@ public class IsotopeFinder {
         int iso = 0;
         double isoMass = monoMz, intensity = 0d, tolerance = mzTolerance;
         if (isPpm) {
-            tolerance = monoMz * mzTolerance / NumericalConst.MILLION;
+            tolerance = monoMz * mzTolerance * Constants.PPM;
         }
 
         for (int i = 0; i < mzArray.length; i++) {
@@ -31,9 +31,9 @@ public class IsotopeFinder {
                     break;
                 }
                 // charge always == 1 in metabolomics data
-                isoMass += NumericalConst.C13C12_MASSDIFF_U;
+                isoMass += Constants.C13C12_MASSDIFF_U;
                 if (isPpm) {
-                    tolerance = isoMass * mzTolerance / NumericalConst.MILLION;
+                    tolerance = isoMass * mzTolerance * Constants.PPM;
                 }
                 i--;
             }
