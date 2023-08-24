@@ -1,16 +1,18 @@
 package net.csibio.metaphoenix.core.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import net.csibio.metaphoenix.client.service.*;
 import net.csibio.metaphoenix.client.domain.Result;
 import net.csibio.metaphoenix.client.domain.db.LibraryDO;
 import net.csibio.metaphoenix.client.domain.query.LibraryQuery;
 import net.csibio.metaphoenix.client.exceptions.XException;
+import net.csibio.metaphoenix.client.service.CompoundService;
+import net.csibio.metaphoenix.client.service.IDAO;
+import net.csibio.metaphoenix.client.service.LibraryService;
+import net.csibio.metaphoenix.client.service.SpectrumService;
 import net.csibio.metaphoenix.core.dao.LibraryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +22,6 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Autowired
     LibraryDAO libraryDAO;
-    @Autowired
-    LibraryParserService libraryParserService;
     @Autowired
     CompoundService compoundService;
     @Autowired
@@ -52,18 +52,6 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public void beforeRemove(String id) throws XException {
         compoundService.removeAllByLibraryId(id);
-    }
-
-    @Override
-    public Result parseAndInsert(LibraryDO library, InputStream in, int fileFormat) {
-        Result result = null;
-        try {
-            result = libraryParserService.parse(in, library, fileFormat);
-        } catch (Exception e) {
-            libraryDAO.remove(library.getId());
-            return Result.Error(e.getMessage());
-        }
-        return result;
     }
 
     @Override

@@ -43,31 +43,6 @@ public class LibraryController extends BaseController<LibraryDO, LibraryQuery> {
         return res;
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    Result upload(LibraryUploadVO libraryUploadVO) {
-        try {
-            LibraryDO library = new LibraryDO();
-            BeanUtils.copyProperties(libraryUploadVO, library);
-            Result result = libraryService.insert(library);
-            check(result);
-            MultipartFile libFile = libraryUploadVO.getLibFile();
-            if (libFile != null) {
-                String extraName = libFile.getOriginalFilename();
-                String oName = extraName.substring(extraName.lastIndexOf("."));
-                if (oName.equals(".xlsx")) {
-                    return libraryService.parseAndInsert(library, libFile.getInputStream(), 1);
-                } else {
-                    return libraryService.parseAndInsert(library, libFile.getInputStream(), 2);
-                }
-            } else {
-                return result;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.Error(ResultCode.INSERT_ERROR);
-        }
-    }
-
     @RequestMapping(value = "/fetchLibraryLabelValues")
     Result<List<LabelValue>> fetchLibraryLabelValues(@RequestParam(value = "type", required = false) String type) {
         LibraryQuery query = new LibraryQuery();
@@ -88,7 +63,6 @@ public class LibraryController extends BaseController<LibraryDO, LibraryQuery> {
     Result update(LibraryUploadVO libraryUploadVO) throws XException {
         LibraryDO library = libraryService.tryGetById(libraryUploadVO.getId(), ResultCode.LIBRARY_NOT_EXISTED);
         library.setDescription(libraryUploadVO.getDescription());
-        library.setType(libraryUploadVO.getType());
         library.setTags(libraryUploadVO.getTags());
         library.setSpecies(libraryUploadVO.getSpecies());
         library.setMatrix(libraryUploadVO.getMatrix());

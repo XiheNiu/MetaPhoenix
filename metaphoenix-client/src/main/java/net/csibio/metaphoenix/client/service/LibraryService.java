@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface LibraryService extends BaseService<LibraryDO, LibraryQuery> {
 
-    Result parseAndInsert(LibraryDO library, InputStream in, int fileFormat);
-
     List<LibraryDO> getAllByIds(List<String> ids);
 
     /**
